@@ -28,8 +28,12 @@ class Players(Grid):
         self.CPU_symbol = ''
         self.players = []
         ##########
-        self.player_names = [self.player_name, 'CPU']
+        self.player_names = ['Player', 'CPU']
         self.starter = random.choice(self.player_names)
+        self.random = random.choice(self.choice)
+        # print(self.random)
+        self.random2 = random.choice(self.choice2)
+        # print(self.random2)
 
     def player_creator(self):
         self.player_name = input('Enter Name: ')
@@ -47,8 +51,9 @@ class Players(Grid):
 
     def game_starter(self):
         print(input("\n Press enter to select starter: "))
+        print(f" \n{self.starter} plays first. ")
 
-        return f" \n{self.starter} plays first. "
+        return self.starter
 
     def cpu_hand(self):
 
@@ -78,11 +83,6 @@ class Players(Grid):
         return self.grid
 
     def cpu_hand2(self):
-        self.random = random.choice(self.choice)
-        print(self.random)
-        self.random2= random.choice(self.choice2)
-        print(self.random2)
-
         if self.gl[5] == " ":
             self.gl[5] = self.CPU_symbol
         elif self.random == " ":
@@ -182,18 +182,18 @@ print(players.game_starter())
 # print(players.cpu_hand())
 # print(players.test_winner())
 
-print()
-if players.game_starter() is players.player_name:
+
+if players.game_starter()=="Player":
     while players.test_fullList() is False:
         print(players.player_hand())
-        print(players.test_winner())
+        players.test_winner()
         print(players.cpu_hand())
-        print(players.test_winner())
+        players.test_winner()
 
 
-else:
+elif players.game_starter()=="CPU":
     while players.test_fullList() is False:
         print(players.cpu_hand())
-        print(players.test_winner())
+        players.test_winner()
         print(players.player_hand())
-        print(players.test_winner())
+        players.test_winner()
