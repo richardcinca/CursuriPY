@@ -1,110 +1,194 @@
-# Class Board:
-    define grid_list
-    define grid
-# Class Players:
-    define players
-    define moves
-    check_winnermove
-
+# # Class Board:
+#     define grid_list
+#     define grid
+# # Class Players:
+#     define players
+#     define moves
+#     check_winnermove
+#
 
 import time
 import random
 
-class Game:
+
+class Grid:
     def __init__(self):
-        self.gl= [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
-        self.grid=f"""
+        self.gl = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
+        self.grid = f"""
 
-            [{gl[1]}]  [{gl[2]}]  [{gl[3]}]
+            [{self.gl[1]}]  [{self.gl[2]}]  [{self.gl[3]}]
 
-            [{gl[4]}]  [{gl[5]}]  [{gl[6]}]
+            [{self.gl[4]}]  [{self.gl[5]}]  [{self.gl[6]}]
 
-            [{gl[7]}]  [{gl[8]}]  [{gl[9]}]
-
+            [{self.gl[7]}]  [{self.gl[8]}]  [{self.gl[9]}]
 
     """
 
-    def starter(self):
+    def display_grid(self):
+        return self.grid
 
 
-
-
-
-class Players():
-    #SUPER
-    def __init__(self,name,symbol):
+class Players(Grid):
+    def __init__(self):
         super().__init__()
-        self.name=name`
-        self.symbol=symbol
 
-    def CPU_hand():
+        self.player_name = ""
+        self.cpu_player_name = ""
+        ############
+        self.symbols = ['x', 'o']
+        self.player_symbol = ''
+        self.CPU_symbol = ''
+        self.players = []
+        ##########
+        self.player_names = ['Player', 'CPU']
+        self.starter = random.choice(self.player_names)
 
-        # Delayed the hand by 4sec
-        time.sleep(4)
+    def player_creator(self):
+        self.player_name = input('Enter Name: ')
+        self.cpu_player_name = input('Enter CPU Name: ')
+        return f"{self.player_name} VS CPU {self.cpu_player_name}"
 
-        if gl[5] == " ":
-            gl[5] = CPU_symbol
-        elif gl[1] == " ":
-            gl[1] = CPU_symbol
-        elif gl[3] == " ":
-            gl[3] = CPU_symbol
-        elif gl[7] == " ":
-            gl[7] = CPU_symbol
-        elif gl[2] == " ":
-            gl[2] = CPU_symbol
-        elif gl[4] == " ":
-            gl[4] = CPU_symbol
-        elif gl[6] == " ":
-            gl[6] = CPU_symbol
-        elif gl[8] == " ":
-            gl[8] = CPU_symbol
-        # print(gl)
-        grid = f"""
+    def symbol_selector(self):
+        while self.player_symbol not in self.symbols:
+            self.player_symbol = input("\nSelect your symbol x / o: ")
+        if self.player_symbol == self.symbols[0]:
+            self.CPU_symbol = self.symbols[1]
+        else:
+            self.CPU_symbol = self.symbols[0]
+        return f"{self.player_name} plays '{self.player_symbol}' VS CPU '{self.cpu_player_name}' plays {self.CPU_symbol}"
 
-            [{gl[1]}]  [{gl[2]}]  [{gl[3]}]
+    def game_starter(self):
+        print(input("\n Press enter to select starter: "))
 
-            [{gl[4]}]  [{gl[5]}]  [{gl[6]}]
+        return f" \n{self.starter} plays first. "
 
-            [{gl[7]}]  [{gl[8]}]  [{gl[9]}]
+    def cpu_hand(self):
+
+        if self.gl[5] == " ":
+            self.gl[5] = self.CPU_symbol
+        elif self.gl[1] == " ":
+            self.gl[1] = self.CPU_symbol
+        elif self.gl[3] == " ":
+            self.gl[3] = self.CPU_symbol
+        elif self.gl[7] == " ":
+            self.gl[7] = self.CPU_symbol
+        elif self.gl[2] == " ":
+            self.gl[2] = self.CPU_symbol
+        elif self.gl[4] == " ":
+            self.gl[4] = self.CPU_symbol
+        elif self.gl[6] == " ":
+            self.gl[6] = self.CPU_symbol
+        elif self.gl[8] == " ":
+            self.gl[8] = self.CPU_symbol
+        # print(self.gl)
+        self.grid = f"""
+
+                        [{self.gl[1]}]  [{self.gl[2]}]  [{self.gl[3]}]
+
+                        [{self.gl[4]}]  [{self.gl[5]}]  [{self.gl[6]}]
+
+                        [{self.gl[7]}]  [{self.gl[8]}]  [{self.gl[9]}]
 
 
-    """
-        print(grid)
+                """
 
-    # CPU_hand()
+        return self.grid
 
-    def player_hand():
-
+    def player_hand(self):
         while True:
             # Used a try/except method to solve an incorrect input issue
             try:
                 # Player inputs his move
-                player_choice = int(input('\nChoose your move from 1 to 9:  '))
-                # print(player_choice)
+                self.player_choice = int(input('\nChoose your move from 1 to 9:  '))
+                print(self.player_choice)
+                print(self.gl[self.player_choice])
 
                 # If not available, the player has to choose another cell
-                while self.gl[player_choice] != " ":
-                    player_choice = int(input('\nChoice not available. Choose from 1 to 9:  '))
+                while self.gl[self.player_choice] != " ":
+                    self.player_choice = int(input('\nChoice not available. Choose from 1 to 9:  '))
                 else:
-                    gl[player_choice] = player_symbol
+                    self.gl[self.player_choice] = self.player_symbol
 
                 # print(gl)
 
                 # Had to declare again the grid in order to make any changes on it
-                grid = f"""
+                self.grid = f"""
 
-            [{gl[1]}]  [{gl[2]}]  [{gl[3]}]
+                [{self.gl[1]}]  [{self.gl[2]}]  [{self.gl[3]}]
 
-            [{gl[4]}]  [{gl[5]}]  [{gl[6]}]
+                [{self.gl[4]}]  [{self.gl[5]}]  [{self.gl[6]}]
 
-            [{gl[7]}]  [{gl[8]}]  [{gl[9]}]
+                [{self.gl[7]}]  [{self.gl[8]}]  [{self.gl[9]}]
 
 
-    """
-                print(grid)
-                break
+        """
+                return self.grid
+
             except:
                 pass
             print("\nIncorrect input. Choose from 1 to 9:  ")
 
+    def test_winner(self):
+        # Iterating the player symbols and checking for any winning combo
+        # Issue with break - after winning the game continues
 
+        for i in self.symbols:
+            # print(i)
+            if self.gl[1] == self.gl[2] == self.gl[3] == i or \
+                    self.gl[4] == self.gl[5] == self.gl[6] == i or \
+                    self.gl[7] == self.gl[8] == self.gl[9] == i or \
+                    self.gl[1] == self.gl[5] == self.gl[9] == i or \
+                    self.gl[3] == self.gl[5] == self.gl[7] == i or \
+                    self.gl[1] == self.gl[4] == self.gl[7] == i or \
+                    self.gl[2] == self.gl[5] == self.gl[8] == i or \
+                    self.gl[3] == self.gl[6] == self.gl[9] == i:
+                print(f'{i} won!')
+
+                return exit()
+
+        else:
+            return False
+
+    def test_fullList(self):
+        if " " in self.gl[1:]:
+            # print("Not full")
+            return False
+        else:
+            return True
+
+
+grid = Grid()
+
+players = Players()
+
+print(players.player_creator())
+print(players.symbol_selector())
+print(players.game_starter())
+# print(grid.display_grid())
+# print(players.player_hand())
+# print(players.cpu_hand())
+# print(players.test_fullList())
+# print(players.player_hand())
+# print(players.cpu_hand())
+# print(players.player_hand())
+#
+# print(players.cpu_hand())
+# print(players.player_hand())
+# print(players.cpu_hand())
+# print(players.test_winner())
+
+
+if players.game_starter() is players.player_name:
+
+    while players.test_fullList() is False:
+        print(players.player_hand())
+        print(players.test_winner())
+        print(players.cpu_hand())
+        print(players.test_winner())
+
+else:
+    while players.test_fullList() is False:
+        print(players.cpu_hand())
+        print(players.test_winner())
+        print(players.player_hand())
+        print(players.test_winner())
